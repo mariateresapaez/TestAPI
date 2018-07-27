@@ -1,0 +1,988 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "1.18",
+    "title": "customerView"
+  },
+  "host": "api.orange.com",
+  "basePath": "/customerview",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/{brand}/customerView/{idType}/{id}": {
+      "get": {
+        "tags": [
+          "customerView"
+        ],
+        "summary": "get",
+        "description": "This API allows to get a full 360° view for an Orange Spain customer. The API requires a customerID or a publicKey or a nationalID (organization or individual) as an input parameter.",
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "brand",
+            "in": "path",
+            "description": "brand of Group Orange (orange | amena)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "idType",
+            "in": "path",
+            "description": "type for id of the client (residential | business)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "identifier number of the client",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "description": "source type for jazztel information (iris|crm4t)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "bad_request_technical",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "404": {
+            "description": "resource_not_found",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "500": {
+            "description": "internal_server-error",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "503": {
+            "description": "service_unavailable",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Customer": {
+      "description": "A person or organization that buys or has bought or otherwise obtained Products, Resources and/or Services from the enterprise or receives free offers for Products, Resources, and/or Services.  This is modeled as a Party playing the role of Customer. Customers do not have to be end-users. For example, a Customer can also be another Service Provider (i.e., one who resells the enterprise´s Products, Services and/or Resources), or a Service Providers that leases the enterprise´s Products, Services and/or Resources.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "A unique identifier of the Customer.",
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "product": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        },
+        "ospTotalPoints": {
+          "description": "Indicate the number of points accumulated by the customer.",
+          "type": "integer",
+          "format": "int32"
+        },
+        "ospIDsource": {
+          "description": "Identifies the master of the customer data, such as a movil or fijo.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The current condition of a customer, such as active, inactive, prospective.",
+          "type": "string"
+        },
+        "ospDataDonor": {
+          "description": "Field indicating whether the customer is a data donor.",
+          "type": "string"
+        },
+        "ospCIMAarchitectureCustomer": {
+          "description": "Indicates if the customer is supported by the CIMA architure.",
+          "type": "string"
+        },
+        "ospMobileCustomerSegment": {
+          "description": "The type of a customer in the mobile backend.",
+          "type": "string"
+        },
+        "ospFixeCustomerSegment": {
+          "description": "The type of a customer in the fixed backend.",
+          "type": "string"
+        },
+        "ospMobileCustomerSubSegment": {
+          "description": "The subtype of a customer in the mobile backend.",
+          "type": "string"
+        },
+        "ospMobileValueSegment": {
+          "description": "Value segment in the mobile backend, for example RES 4, PYME 2...",
+          "type": "string"
+        },
+        "ospFixeValueSegment": {
+          "description": "Value segment in the fixed backend, for example RES 4, PYME 2...",
+          "type": "string"
+        },
+        "ospConvergentType": {
+          "description": "Convergent type such as BIEQUIPADO, MOVIL, FIJO",
+          "type": "string"
+        },
+        "ospCustomerUnpaidBill": {
+          "description": "Indicate if customer have an unpaid bill",
+          "type": "boolean"
+        },
+        "ospCustomerFraude": {
+          "description": "Indicate if customer if the consumer has made fraudulent actions",
+          "type": "boolean"
+        },
+        "ospPointProgrammeType": {
+          "description": "Point programme for customers who have more than five lines, that is, Pymes and Big Accounts",
+          "type": "string"
+        },
+        "billingAccount": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BillingAccount"
+          }
+        },
+        "customerBill": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomerBill"
+          }
+        },
+        "telephoneNumber": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TelephoneNumber"
+          }
+        },
+        "emailContact": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EmailContact"
+          }
+        },
+        "postalContact": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PostalContact"
+          }
+        },
+        "customerCharacteristic": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Characteristic"
+          }
+        },
+        "relatedParty": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelatedPartyRef"
+          }
+        },
+        "individual": {
+          "$ref": "#/definitions/Individual"
+        },
+        "organization": {
+          "$ref": "#/definitions/Organization"
+        }
+      }
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "$ref": "#/definitions/Customer"
+        },
+        "error": {
+          "$ref": "#/definitions/Error"
+        }
+      }
+    },
+    "CustomerBill": {
+      "description": "A CustomerBill or an Invoice is an electronic or paper document, that gathers and formats charges to be charged together to a BillingAccount for a billing cycle.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier for the customer bill",
+          "type": "string"
+        },
+        "billingAccount": {
+          "$ref": "#/definitions/BillingAccountRef"
+        },
+        "category": {
+          "description": "Normal, duplicate invoice, interim invoice, last invoice, credit note, trial invoice",
+          "type": "string"
+        },
+        "amountDue": {
+          "description": "Amount due for this customer bill expressed in the given currency",
+          "type": "number",
+          "format": "double"
+        },
+        "invoiceDomainSpecLabel": {
+          "description": "Customer bill domain: Fix, Mobile, Broadband, Multiplay",
+          "type": "string"
+        },
+        "billMedia": {
+          "description": "Customer bill media type",
+          "type": "string"
+        }
+      }
+    },
+    "Organization": {
+      "description": "A group of people identified by shared interests or purpose. Because of the complex nature of many businesses, both organisations and organisation unit are represented by the same business entity in the model. An Organisation is a type of Party. An organisation can be atomic or composite. A composite organisation is a container of organisations. Any kind of organisational tree can be described.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier for an organization",
+          "type": "string"
+        },
+        "ospIDtype": {
+          "description": "CIF",
+          "type": "string"
+        },
+        "ospIDsource": {
+          "description": "Values: fijo, movil",
+          "type": "string"
+        },
+        "isLegalEntity": {
+          "description": "If true, the organisation is a legal entity known by national referential.",
+          "type": "boolean"
+        },
+        "legalStatusCode": {
+          "description": "Precise the status of a legal entity like Legally established, registration in progress, Receivership",
+          "type": "string"
+        },
+        "tradingName": {
+          "description": "The name that the organisation (unit) trades under",
+          "type": "string"
+        }
+      }
+    },
+    "Individual": {
+      "description": "A Person represents a single human being. A Person is a type of Party. As a Party, a person could play a role of a customer, an employee or any other person that the organisation needs to store information about.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of an individual",
+          "type": "string"
+        },
+        "ospIDtype": {
+          "description": "NIF, número de pasaporte, número de tarjeta de identidad",
+          "type": "string"
+        },
+        "ospIDsource": {
+          "description": "Values: fijo, movil",
+          "type": "string"
+        },
+        "birthDate": {
+          "description": "Birthdate of the customer",
+          "type": "string"
+        },
+        "firstName": {
+          "description": "First name of the person also known as given name",
+          "type": "string"
+        },
+        "lastName": {
+          "description": "Usual name of the person",
+          "type": "string"
+        },
+        "formattedName": {
+          "description": "Contains, in one string, a fully formatted name with all of its pieces in their proper place. This includes all of the necessary punctuation. This de-normalized form of the name cannot be easily parsed.",
+          "type": "string"
+        }
+      }
+    },
+    "TelephoneNumber": {
+      "description": " A phone number follows the recommendations of the E164 internationa public telecommunications numbering plan (see phone numbering). The French numbering plan is based on a 10-digit format which unambiguously refers to customer terminal equipment or service, through a number such as EZABPQMCDU. Short, 4-digit numbers like 33BPQ are rare resources. The geographical numbers for which \"Z\" is 1,2,3,4, or 5 are assigned by the telecom operator in an elementary numbering area (ARCEP ENA concept). ARCEP assigns a set of phone numbers to the telecommunication operators. A customer resource id is a special case of IS logical resource.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the telephone",
+          "type": "string"
+        },
+        "ospIDsource": {
+          "description": "Identifies the master of the customer data, such as a movil or fijo.",
+          "type": "string"
+        },
+        "type": {
+          "description": "There is two types if the customer is a mobile customer: phone number and mobile phone",
+          "type": "string"
+        },
+        "number": {
+          "description": "Telephonenumber and the number of lines mobiles hired by customer",
+          "type": "string"
+        }
+      }
+    },
+    "GeographicSubAddress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "door": {
+          "type": "string"
+        }
+      }
+    },
+    "PostalContact": {
+      "description": "The PostalContact is a type of ContactMedium. It is linked to an AbstractGeograpicalAddress through a contactAddressRole that specifies whether this contact address is to be used as a billing address, a Phone      Directory address etc... (In version of Orange SID prior to S9F1, this entity was called Address; as we reviewed and evolved the model, this is referred to now as a Contact      Address.)",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Identifier of the address",
+          "type": "string"
+        },
+        "ospIDsource": {
+          "description": "Identifies the master of the customer data, such as a movil or fijo.",
+          "type": "string"
+        },
+        "type": {
+          "description": "If is a mobile customer: 1)postal address 2)billing address. If is a fixe customer: 1)postal address 2)billing address 3)installed product address",
+          "type": "string"
+        },
+        "city": {
+          "description": "The name of the city",
+          "type": "string"
+        },
+        "country": {
+          "description": "The name of the country",
+          "type": "string"
+        },
+        "postCode": {
+          "description": "The post code of the postal address",
+          "type": "string"
+        },
+        "stateOrProvince": {
+          "description": "The name of the state",
+          "type": "string"
+        },
+        "streetType": {
+          "description": "The type of the street",
+          "type": "string"
+        },
+        "streetName": {
+          "description": "The name of the street",
+          "type": "string"
+        },
+        "streetNr": {
+          "description": "The number of the street",
+          "type": "string"
+        },
+        "staircaseNumber": {
+          "description": "The number of the staircase",
+          "type": "string"
+        },
+        "floorNumber": {
+          "description": "The number of the floor",
+          "type": "string"
+        },
+        "apartmentNumber": {
+          "description": "The number of the apartament",
+          "type": "string"
+        },
+        "geographicSubAddress": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GeographicSubAddress"
+          }
+        }
+      }
+    },
+    "EmailContact": {
+      "description": "An EmailContact is a type of ContactMedium.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier for the email",
+          "type": "string"
+        },
+        "ospIDsource": {
+          "description": "Identifies the master of the customer data, such as a movil or fijo.",
+          "type": "string"
+        },
+        "type": {
+          "description": "If the customer is a mobile customer: 1)email 2)validated email. If the customer is a fixe customer: 1)email",
+          "type": "string"
+        },
+        "eMailAddress": {
+          "description": "Defines the email of the emailContact",
+          "type": "string"
+        }
+      }
+    },
+    "ProductCharacteristic": {
+      "description": "The value(s) of a configured function of an InstalledProduct.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Identifies the name of the product, it depends on the product name and the product type ",
+          "type": "string"
+        },
+        "value": {
+          "description": "Determinate the value of the product, it depends on the product name and the product type ",
+          "type": "string"
+        },
+        "isInstalledPublicKey": {
+          "type": "boolean"
+        },
+        "publicKey": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PublicKey"
+          }
+        }
+      }
+    },
+    "Product": {
+      "description": "Represents an instance of a product offering subscribed to by a party, such as a customer, the place where the product is in use, as well as configuration characteristics, such as assigned telephone numbers and internet addresses.  The Product ABE also tracks the services and/or resources through which the product is realized.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the product",
+          "type": "string"
+        },
+        "ospProductType": {
+          "description": "Defines the type of the product, it depends on the product name and the product type ",
+          "type": "string"
+        },
+        "ospIsConvergent": {
+          "description": "Identifies if a line has a convergent or not rate",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Identifies the name of the product, it depends on the product name and the product type ",
+          "type": "string"
+        },
+        "description": {
+          "description": "Description of the product",
+          "type": "string"
+        },
+        "status": {
+          "description": "Created, Pending_active, Aborted, Cancelled, Active, Pending_terminate, Terminated, Suspended",
+          "type": "string"
+        },
+        "isCustomerVisible": {
+          "description": "Defines whether visible, default value: Yes",
+          "type": "boolean"
+        },
+        "isBundle": {
+          "description": "Identifies if a package, Yes for Product name=Contrato Móvil or Contrato Fijo. No for the others",
+          "type": "boolean"
+        },
+        "startDate": {
+          "description": "An instant of time, starting at the product",
+          "type": "string"
+        },
+        "terminationDate": {
+          "description": "An instant of time, ending at the product",
+          "type": "string"
+        },
+        "ospDuration": {
+          "description": "period of time of a vap product",
+          "type": "integer"
+        },
+        "place": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PostalContact"
+          }
+        },
+        "productCharacteristic": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductCharacteristic"
+          }
+        },
+        "productRelationship": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductRelationship"
+          }
+        },
+        "relatedParty": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelatedPartyRef"
+          }
+        },
+        "productPrice": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductPrice"
+          }
+        },
+        "billingAccount": {
+          "$ref": "#/definitions/BillingAccountRef"
+        },
+        "agreement": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Agreement"
+          }
+        },
+        "productOffering": {
+          "$ref": "#/definitions/ProductOffering"
+        }
+      }
+    },
+    "ProductOffering": {
+      "type": "object",
+      "properties": {
+        "productOfferingPrice": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductOfferingPrice"
+          }
+        }
+      }
+    },
+    "Characteristic": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "ProductOfferingPrice": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "name of the productOfferingPrice",
+          "type": "string"
+        },
+        "validFor": {
+          "$ref": "#/definitions/TimePeriod"
+        },
+        "price": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Price"
+          }
+        },
+        "ospMesesPendientesPago": {
+          "description": "months pending to pay",
+          "type": "integer"
+        }
+      }
+    },
+    "Price": {
+      "type": "object",
+      "properties": {
+        "taxIncludedAmount": {
+          "description": "All taxes included amount (expressed in the given currency)",
+          "type": "number",
+          "format": "double"
+        },
+        "currencyCode": {
+          "description": "A string used as a code for specifying the currency associated to the given amounts.(EUR for Euro).",
+          "type": "string"
+        },
+        "dutyFreeAmount": {
+          "type": "number",
+          "format": "double"
+        },
+        "taxRate": {
+          "type": "number",
+          "format": "double"
+        },
+        "percentage": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "ProductPrice": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "priceType": {
+          "type": "string"
+        },
+        "recurringChargePeriod": {
+          "type": "string"
+        },
+        "unitOfMeasure": {
+          "type": "string"
+        },
+        "price": {
+          "$ref": "#/definitions/Price"
+        },
+        "prodPriceAlteration": {
+          "$ref": "#/definitions/ProdPriceAlteration"
+        }
+      }
+    },
+    "ProdPriceAlteration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "priceType": {
+          "type": "string"
+        },
+        "recurringChargePeriod": {
+          "type": "string"
+        },
+        "unitOfMeasure": {
+          "type": "string"
+        },
+        "applicationDuration": {
+          "type": "number",
+          "format": "double"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "price": {
+          "$ref": "#/definitions/Price"
+        }
+      }
+    },
+    "TimePeriod": {
+      "description": "A base / value business entity used to represent a period of time between two timepoints.",
+      "type": "object",
+      "properties": {
+        "startDateTime": {
+          "description": "An instant of time, starting at the TimePeriod",
+          "type": "string"
+        },
+        "endDateTime": {
+          "description": "An instant of time, ending at the TimePeriod.",
+          "type": "string"
+        }
+      }
+    },
+    "BillingAccount": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the billingAccount",
+          "type": "string"
+        },
+        "billingAddress": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PostalContact"
+          }
+        },
+        "ospIDsource": {
+          "description": "If the customer is Orange mobile: BSCS v6. If the customer Orange fixe: Kenan FX 2.0. If both: Kenan FX 2.5",
+          "type": "string"
+        },
+        "ospRelatedBillingAccountForSingleInvoice": {
+          "description": "Indicates if a fixe and a billing account are tied by a single invoice for a convergent offer",
+          "type": "string"
+        },
+        "ospDataDonor": {
+          "description": "Field indicating whether the customer is a data donor.",
+          "type": "string"
+        },
+        "ospMultilineDiscount": {
+          "description": "Field indicating whether the customer has multiline discount for profiling.",
+          "type": "string"
+        },
+        "ratingType": {
+          "description": "PRGCode",
+          "type": "string"
+        },
+        "name": {
+          "description": "Defines the name of the billinAccount",
+          "type": "string"
+        },
+        "status": {
+          "description": "Identifies the status of the billingAccount",
+          "type": "string"
+        },
+        "ospAccountUnpaidBill": {
+          "description": "Indicate if account have an unpaid bill",
+          "type": "boolean"
+        },
+        "customerBillingCycleSpecification": {
+          "$ref": "#/definitions/CustomerBillingCycleSpecification"
+        },
+        "customerBillFormat": {
+          "$ref": "#/definitions/CustomerBillFormat"
+        },
+        "customerBillPresentationMedia": {
+          "$ref": "#/definitions/CustomerBillPresentationMedia"
+        },
+        "currency": {
+          "$ref": "#/definitions/Currency"
+        },
+        "billingAccountBalance": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BillingAccountBalance"
+          }
+        },
+        "authorizedName": {
+          "type": "string"
+        },
+        "authorizedDocument": {
+          "type": "string"
+        },
+        "relatedParty": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelatedPartyRef"
+          }
+        }
+      }
+    },
+    "CustomerBillingCycleSpecification": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Identifies the name of customerBillingCycleSpecification, it depends on the product name.",
+          "type": "string"
+        }
+      }
+    },
+    "CustomerBillFormat": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Identifies the name of customerBillFormat",
+          "type": "string"
+        }
+      }
+    },
+    "CustomerBillPresentationMedia": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Identifies the name of customerBillPresentationMedia",
+          "type": "string"
+        }
+      }
+    },
+    "Currency": {
+      "type": "object",
+      "properties": {
+        "currencyCode": {
+          "description": "Default value EUR",
+          "type": "string"
+        }
+      }
+    },
+    "BillingAccountBalance": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Defines the type of the BillingAccountBalance",
+          "type": "string"
+        },
+        "amount": {
+          "description": "Amount",
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "BillingAccountRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Defines the id of the BillingAccount",
+          "type": "string"
+        }
+      }
+    },
+    "ProductRelationship": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Identifies the type of the productRelationShip, it depends on the product name.",
+          "type": "string"
+        },
+        "product": {
+          "$ref": "#/definitions/ProductRef"
+        }
+      }
+    },
+    "Agreement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of Agreement",
+          "type": "string"
+        },
+        "ospCdp": {
+          "description": "defines if is in an agreement or not",
+          "type": "string"
+        },
+        "ospPenaltyRelatedToAgreementPeriod": {
+          "description": "Identifies penalty in Euros in case of break the agreement",
+          "type": "number",
+          "format": "double"
+        },
+        "description": {
+          "description": "Description of agreement",
+          "type": "string"
+        },
+        "ospModalidad": {
+          "description": "type of the mobile agreement",
+          "type": "string"
+        },
+        "ospDuration": {
+          "description": "defines the period of the agreement in days",
+          "type": "integer"
+        },
+        "type": {
+          "description": "Type of agreement, it depends on the product name.",
+          "type": "string"
+        },
+        "agreementPeriod": {
+          "$ref": "#/definitions/TimePeriod"
+        }
+      }
+    },
+    "PublicKey": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of publicKey",
+          "type": "string"
+        },
+        "name": {
+          "description": "Determinate the name of publicKey",
+          "type": "string"
+        }
+      }
+    },
+    "ProductRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of ProductRef",
+          "type": "string"
+        }
+      }
+    },
+    "RelatedPartyRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "ospTypeId": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "validFor": {
+          "$ref": "#/definitions/TimePeriod"
+        }
+      }
+    },
+    "Error": {
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "description": "An integer coding the error type. This is given to caller so he can translate them if required.",
+          "type": "integer"
+        },
+        "message": {
+          "description": "A short localized string that describes the error.",
+          "type": "string"
+        },
+        "description": {
+          "description": "(optional) A long localized error description if needed. It can contain precise information about which parameter is missing, or what are the identifier acceptable values.",
+          "type": "string"
+        },
+        "infoURL": {
+          "description": "(optional) A URL to online documentation that provides more information about the error.",
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorDetail"
+          }
+        }
+      }
+    },
+    "ErrorDetail": {
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "description": "An integer coding the error type. This is given to caller so he can translate them if required.",
+          "type": "integer"
+        },
+        "message": {
+          "description": "A short localized string that describes the error.",
+          "type": "string"
+        },
+        "description": {
+          "description": "(optional) A long localized error description if needed. It can contain precise information about which parameter is missing, or what are the identifier acceptable values.",
+          "type": "string"
+        },
+        "infoURL": {
+          "description": "(optional) A URL to online documentation that provides more information about the error.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
